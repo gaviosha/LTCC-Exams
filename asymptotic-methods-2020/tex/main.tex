@@ -1,0 +1,80 @@
+%============ standard packages ===============%
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[parfill]{parskip}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{natbib}
+\bibliographystyle{agsm}
+\usepackage{amsmath}
+\usepackage{mathabx}
+\usepackage{xcolor}
+
+%============ packages for spacing ===============%
+\usepackage[a4paper,
+    left=1.3in,
+    right=1in]{geometry}
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.4}
+\setcounter{tocdepth}{2}
+
+\title{Asymptotic Methods Coursework}
+\date{April 2020}
+
+\begin{document}
+
+\maketitle
+
+This note summarises the results presented in the paper \textit{Local Limit Theorems for Large Deviations} and gives an overview of the main asymptotic arguments through which they are obtained. 
+
+\section*{Main Results}
+
+Given a collection of independent and centred random variables $X_1, X_2, ...$ with known density functions $V_1(x), V_2(x),...$ and bounded second moments $\sigma_1^2, \sigma_2^2, ...$ the paper is concerned with the limit behaviour of the normalised sum
+
+\begin{equation*}
+    Z_n = \frac{\sum_{j=1}^nX_j}{s_n}
+\end{equation*}
+
+where $s_n^2 = \sum_{j=1}^n \sigma_j^2$. Let $F_n(x) = \mathbb{P}(Z_n < x)$. The paper is specifically concerned with the behaviour of the tails of the distribution, this amounts to finding a good approximation to $F_n(x)$ when $x$ is \textit{large}. The setting $x = o(\sqrt{n})$ is considered; meaning $x \rightarrow \infty$ and $x / \sqrt{n} \rightarrow 0$ as $n \rightarrow \infty$. \textit{Theorem 2}, which is discussed in this note, gives that under certain assumption when $X_1.X_2,...$ are identically distributed the following holds: 
+
+\begin{equation*}
+    \frac{p_{z_n}(x)}{\varphi(x)} = \exp \left ( (x^3 / \sqrt{n}) \cdot \lambda(x/\sqrt{n}) \right ) \left [ 1 + O(\frac{x}{\sqrt{n}}) \right ]
+\end{equation*}
+
+Where $p_{z_n}(x)$ is the density function of the normalised sum, and $\lambda(t)$ is a power series converging for sufficiently small $|t|$. Two additional theorems are presented: \textit{Theorem 1} relaxes the need for $X, X_2, ...$ to be identically distributed, and \textit{Theorem 3} gives a similar expression for random variables taking values on some arithmetic progression. 
+
+\section*{Asymptotic Arguments}
+
+This note discusses only the proof for \textit{Theorem 2}, as the asymptotic arguments used in the other theorems do not differ much. The general proof strategy for all three theorems is as follows:
+
+\begin{enumerate}
+    \item Relate the density function of $Z_n$ to its moment generating function via a Fourier inversion. 
+    \item Re-write the associated contour integral as a Bromowich integral.  
+    \item Apply the saddle point approximation method by making the real part of the integrating path pass through the saddle point of the real valued integrand.
+\end{enumerate}
+
+In particular, step 2 relies on the assumption that on some strip $|\text{Re}(z)| < A$ each of the moment generating functions for $X_1, X_2, ...$ is analytic. A sketch of the asymptotic arguments used in the proof of \textit{Theorem 2} is given below. 
+
+\subsection*{Fourier inversion}
+
+As $X_1, X_2, ...$ are identically distributed the normalised sum becomes $Z_n = \frac{1}{\sigma} \sum_{j=1}^{n}X_j / \sqrt{n}$, and its moment generating function is proportional to the product of the generating functions for $X_1, X_2, ...$. 
+
+\begin{equation*}
+    p_{z_n}(x) = \frac{\sigma \sqrt{n}}{2\pi i}\int_{-i\infty}^{+i\infty} M^n(z) \exp \left ( -\sigma \sqrt{n} z x \right ) dz
+\end{equation*}
+
+\subsection*{Forming the Bromowich integral}
+
+change of variables 
+
+generating function is analytic
+
+\subsection*{Saddle point approximation}
+
+Find saddle point 
+
+
+
+\end{document}
