@@ -1,2 +1,3 @@
 # LTCC-Exams
-Scripts for LTCC exams
+
+This repository contains scripts for exams I have taken from the London Taught Course Centre for students in mathematical sciences (LTCC)[http://www.ltcc.ac.uk/] over the course of my PhD
