@@ -1,0 +1,214 @@
+%============ standard packages ===============%
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[parfill]{parskip}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{natbib}
+\bibliographystyle{agsm}
+\usepackage{amsmath}
+\usepackage{mathabx}
+\usepackage{xcolor}
+
+
+%============ packages for spacing ===============%
+\usepackage[a4paper,
+    left=1.3in,
+    right=1in]{geometry}
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.4}
+\setcounter{tocdepth}{2}
+
+
+
+\title{Random Matrix Theory Exam}
+\author{Shakeel Gavioli-Akilagun}
+\date{April 2021}
+
+\begin{document}
+
+\maketitle
+
+\section*{Question 1}
+
+Consider an $N \times N$ unitary ensemble $H = \left ( H_{i,j} \right )_{i,j = 1}^N$ characterised by the following invariant distribution with dimensionless parameter $t$. 
+
+\begin{equation}
+	\mathcal{P} \left( H \right) \propto \exp \left \{ - Nt \cdot \text{trace} \left( H^4 \right) \right \} 
+	\label{equation: invariant dist}
+\end{equation}
+
+\subsection*{Variational minimisation problem}
+
+Let $\lambda_1, \dots, \lambda_N$ be the eigenvalues of $H$. Introduce the normalised counting measure, and the set of all normalised Borel measures on the reals.  
+
+\begin{align}
+	& \mu_N \left( x \right) = \frac{1}{N} \sum_{i=1}^N \theta \left( x - \lambda_i \right)
+	\label{equation: normalised counting measure} \\ 
+	& \mathcal{M} = \left \{ \nu \in \text{Borel measure on reals} : \int d \nu = 1 \right \}
+\end{align}
+
+It is given that as $N \rightarrow \infty$ the counting measure (\ref{equation: normalised counting measure}) converges to an equilibrium measure $\mu$ given by the solution to the following functional minimisation problem. 
+
+\begin{equation}
+	\mu = \inf_{\mu \in \mathcal{M}} \left \{ N^2 \left [-\int\int \log \left | x-y \right | d\mu (x) d \mu (y) + t \int x^4 d \mu (x) \right ] \right \}
+	\label{equation: varaitional problem}
+\end{equation}
+
+To understand the origin of the two terms in (\ref{equation: varaitional problem}) I derive the marginal distribution of an arbitrary $\lambda_i$ and apply the heuristic argument that the integral should be dominated by the most probable eigenvalue configuration - which naturally implies the minimisation problem (\ref{equation: varaitional problem}). First, writing the diagonal matrix of eigenvalues as $\Lambda = \text{diag} \left ( \lambda_1, \dots \lambda_N \right )$ and the orthogonal matrix of stacked eigenvectors as $U = \left ( U_1, \dots, U_N \right )$ the spectral decomposition $H = U \Lambda U^*$ immediately allows the invariant distribution (\ref{equation: invariant dist}) to be written as follows. 
+
+\begin{equation}
+	\mathcal{P} \left( H \right) \propto \exp \left \{ - Nt \cdot \sum_{i=1}^N \lambda_i^4 \right \}
+	\label{equation: invariant dist eig}
+\end{equation}
+
+Since (\ref{equation: invariant dist eig}) is already a function of the eigenvalues only, to obtain the distribution of eigenvalues and eigenvectors we need only calculate the Jacobian from the change of measure. To obtain the distribution of eigenvalues only we can integrate over the space of eigenvectors. Following \textit{Chapter 6} in \cite{deift1999orthogonal}, since the Jacobian does not actually depend on the eigenvectors this operation only affects the coefficient of proportionality. We therefore obtain the following. 
+
+\begin{align}
+	\mathcal{P} \left ( \lambda_1 \dots, \lambda_N \right ) & = \int \dots \int \prod_{1\leq i < j \leq N} \left ( \lambda_i - \lambda_j \right )^2 \exp \left \{ - Nt \cdot \sum_{i=1}^N \lambda_i^4 \right \} d \mu (U_1) \dots d \mu (U_N) \\ 
+	& \propto \exp \left \{ \sum_{i \neq j}^N \log \left | \lambda_i - \lambda_j \right | - Nt \cdot \sum_{i=1}^N \lambda_i^4 \right \} 
+	\label{equation: eigen decomp dist}
+\end{align}
+
+Finally using the following relation between the Heaviside step function and the Dirac delta function - $\delta (x) = \frac{d}{dx}  \theta (x)$ - we obtain the expression below. For the marginal distribution of an arbitrary eigenvalue we can simply integrate over the remaining $N-1$ eigenvalues, taking into account the fact that there are $N$ ways of choosing a single eigenvalue.
+
+\begin{align}
+	\mathcal{P} \left( \lambda_1, \dots, \lambda_N \right ) & \propto \exp \left \{ \sum_{i \neq j}^N \int \int \log | x-y| \delta(x - \lambda_i) \delta(y - \lambda_j) dx dy - Nt \sum_{i=1}^N \int x^4 \delta (x - \lambda_i) dx  \right \} \\ 
+	& = \exp \left \{ -N^2 \left [ \int \int \log |x-y|^{-1} d \mu_N (x) d \mu_N (y) + t \int x^4 d \mu_N (x) \right ] \right \}
+\end{align} 
+
+The origin of the two terms in (\ref{equation: varaitional problem}) is now clear: the first term is introduced by change of measure from matrix entries to eigenvalues and eigenvectors, while the second term is an artefact of the distribution for the entries of H given in (\ref{equation: invariant dist}). 
+
+\subsection*{Equilibrium measure}
+
+We are given that $d \mu (x) = \sigma (x) dx$, and that $\sigma$ has compact support; I will additionally assumed the support is symmetric and denote it by $\Sigma = (-a, a)$. To solve for $\sigma$ we can substitute the expression into (\ref{equation: varaitional problem}) and take variational derivatives. The normalisation constraint in (\ref{equation: normalised counting measure}) will introduce a Lagrangian multiplier which is given by $L$.  
+
+\begin{equation}
+	-2 \int \sigma (y) \log |x - y| dy + t x^4 = L
+\end{equation}
+
+Let $PV$ denote the principal value. Differentiating with respect to $x$ we obtain the following principal integral equation. 
+
+\begin{equation}
+	PV \int \frac{\sigma(y)}{x-y} dy = 2t x^3 
+	\label{equation: principal integral}
+\end{equation}
+
+To solve (\ref{equation: principal integral}) we can move to the complex plane by writing $x = x \pm 0i$. Introduce the following function which is analytic on $C \setminus \Sigma$. 
+
+\begin{equation}
+	F (z) = \frac{1}{i \pi} \int \frac{\sigma (y)}{y-z} dy
+\end{equation}
+
+Take $F_+ (x)$ and $F_-(x)$ to be the limits of $F(z)$ above and below $\Sigma$. Introduce the function $R(z) = \sqrt{z^2 - a^2}$ which changes sign above and below $\Sigma$ in the complex plane, and write $G(z) = F(z) / R(z)$. The problem (\ref{equation: principal integral}) can therefore be written as a scalar Riemann-Hilbert problem as follows. 
+
+\begin{equation}
+	G_+ (x) - G_-(x) = \frac{4it x^3}{\pi R_+ (x)}
+\end{equation}
+
+Following \textit{Section 6.7} in \cite{deift1999orthogonal} the normalisation constraint (\ref{equation: normalised counting measure})  introduces the following relation, which can be used to solve for the value $a$ in the support of $\sigma$. 
+
+\begin{equation}
+	\frac{2it}{\pi} \int_{-a}^a \frac{x^4}{i \sqrt{a^2 - x^2}} dx = 1 
+\end{equation}
+
+Solving the integral by substitution, or using proposition \textit{6.156} the same textbook, we obtain  $a = \sqrt{\frac{4}{3t}}$. 
+
+\section*{Question 2}
+
+Consider the following $2 \times 2$ Hermitian block matrix $H$ given below. I will show by direct evaluation that the eigenvalues are doubly degenerate and the joint law of the two distinct eigenvalues exhibits quartic decay. 
+
+\begin{equation}
+	H = \begin{pmatrix}
+a e_0 & b_0 e_0 + \mathbf{b \cdot e} \\ 
+b_0 e_0 - \mathbf{b \cdot e} & c e_0 
+\end{pmatrix}
+\label{equation: H}
+\end{equation}
+
+Where in particular the blocks are given below. 
+
+\begin{align}
+e_0 = \begin{pmatrix}
+1 & 0\\ 
+0 & 1
+\end{pmatrix} && e_1 = \begin{pmatrix}
+i & 0\\ 
+0 & -i
+\end{pmatrix} && e_2 = \begin{pmatrix}
+0 & 1\\ 
+-1 & 0
+\end{pmatrix} && e_3 = \begin{pmatrix}
+0 & i\\ 
+i & 0
+\end{pmatrix}
+\end{align}
+
+Although not stated in in the question I will assume the joint law for the parameters $a, c, b_0, \dots, b_3$ satisfies the following. 
+
+\begin{equation}
+	\mathcal{P} \left( a, c, b_0, \dots, b_3 \right ) \propto \exp \left \{ -2 \times \text{trace} \left ( H^2 \right ) \right \} 
+	\label{equation: H law}
+\end{equation}
+
+\subsection*{Doubly degenerate eigenvalues}
+
+To find the eigenvalues of the matrix $H$ we find the roots of the following quartic polynomial. 
+
+\begin{equation}
+	p \left ( \lambda \right ) = \text{det} \left ( \begin{bmatrix}
+(a - \lambda) e_0 & b_0 e_0 + \mathbf{b \cdot e} \\ 
+b_0 e_0 - \mathbf{b \cdot e} & (c - \lambda) e_0 
+\end{bmatrix} \right ) 
+\label{equation: eigrn poly}
+\end{equation}
+
+For any $k \times k$ block matrix the following is true; cf. \cite{powell2011calculating}. 
+
+\begin{equation}
+	\text{det} \left ( \begin{bmatrix} A & B \\ C & D \end{bmatrix}	 \right ) = \text{det} \left ( A - B D^{-1}C \right ) \text{det} \left( D \right ) 
+\end{equation}
+
+Applied to (\ref{equation: eigrn poly}) after some evaluation we have an expression for the characteristic polynomial of the matrix $H$. 
+
+\begin{equation}
+	p \left ( \lambda \right ) = \left ( \lambda^2 - (c+a) \lambda + \left ( ac - \sum_i b_i^2 \right ) \right ) ^ 2
+	\label{equation: closed form p}
+\end{equation}
+
+From (\ref{equation: closed form p}) we immediately see that $H$ must have at least doubly degenerate eigenvalues: since its characteristic polynomial is a quartic which has been factorised as the square of a quadratic at least two of its roots must be repeated. Solving explicitly for the distinct root(s) gives the following.
+
+\begin{equation}
+	\lambda^* = \frac{(c+a)}{2} \pm \sqrt{\frac{(a-c)^2}{4} + \sum_i b_i^2}
+\end{equation}
+
+In the sequel it will be convenient to write $\lambda^* = E \pm R$ where $E = (a+c)/2$, $R^2 = \Omega^2/4 + \sum_i b_i^2$ and $\Omega = (a-c)$. 
+
+\subsection*{Quartic decay of eigenvalue law}
+
+Let $\lambda_1 = E + R$ and $\lambda_2 = E - R$, and wlog assume $\lambda_1 > \lambda_2$. Intuitively we can already see that the joint law $\mathcal{P} \left ( \lambda_1, \lambda_2 \right )$ will exhibit quartic decay, since the two eigenvalues will be equal only when the discriminant is zero but this can only happen when the five quantities $\Omega^2, b_0^2, \dots, b_3^2$ are all simultaneously zero. I show this more formally by performing a change of variables over the joint law for $a,c,b_0, \dots, b_3$ assumed in (\ref{equation: H law}). 
+
+\begin{align}
+	\mathcal{P} \left ( \lambda_1, \lambda_2 \right ) & \propto \int \dots \int \mathcal{P} \left ( a, c, b_0, \dots, b_3 \right ) \delta \left ( \lambda_1 - (E+R) \right ) \delta \left ( \lambda_2 - (E-R) \right ) da \dots db_3 \\ 
+	 & \propto \int \dots \int e^{-\left ( 4(a^2 + c^2) + 8 \sum_i b_i^2 \right )} \delta \left ( \lambda_1 - (E+R) \right ) \delta \left ( \lambda_2 - (E-R) \right ) da \dots db_3 \\ 
+	 & = \int \dots \int e^{- \left ( 4E^2 + 4 R^2 \right )} \delta \left ( \lambda_1 - (E+R) \right ) \delta \left ( \lambda_2 - (E-R) \right ) da \dots db_3
+\end{align}
+
+Where in particular the third line follows from the fact that $\text{trace}(H^2) = 2(a^2 + c^2) + 4 \sum_i b_i^2$. Next performing the change of variables $(a,c) \rightarrow (E, \Omega)$ then the change to spherical coordinates $(\Omega, b_0, \dots, b_3) \rightarrow (R, \theta_0, \dots, \theta_3)$ gives the following. 
+
+\begin{align}
+	\mathcal{P} \left ( \lambda_1, \lambda_2 \right ) & \propto \int \dots \int e^{- \left ( 4E^2 + 4 R^2 \right )} \delta \left ( \lambda_1 - (E+R) \right ) \delta \left ( \lambda_2 - (E-R) \right ) dE d\Omega db_0 \dots db_3 \\ 
+	& \propto  \int \dots \int e^{- \left ( 4E^2 + 4 R^2 \right )} \delta \left ( \lambda_1 - (E+R) \right ) \delta \left ( \lambda_2 - (E-R) \right ) R^4 \dots \\
+	& \dots \sin^{3} (\theta_0) \sin^2 (\theta_1) \sin (\theta_2) dR d\theta_0 \dots d\theta_3 \nonumber 
+\end{align}
+
+Overall we have that $\mathcal{P} \left ( \lambda_1, \lambda_2 \right ) \propto \left ( \lambda_1 - \lambda_2 \right )^4 e^{-2 \left ( \lambda_1^2 + \lambda_2^2 \right)}$ which confirms that the joint law exhibits quartic decay. 
+
+\newpage 
+
+\bibliographystyle{ksfh_nat}
+\bibliography{ref}
+
+\end{document}
