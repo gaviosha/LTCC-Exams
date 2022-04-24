@@ -1,0 +1,224 @@
+\documentclass{article}
+
+%%% core packages %%% 
+
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+\RequirePackage{natbib}
+\RequirePackage{hyperref}
+\RequirePackage{booktabs, array}
+\RequirePackage{lipsum}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{subcaption}
+\RequirePackage{multirow}
+\RequirePackage{float}
+
+%%% Referencing %%%
+
+\bibliographystyle{agsm}
+
+
+%%% algorithms %%% 
+
+\RequirePackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+
+
+%%% page setup %%%
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[parfill]{parskip}
+\RequirePackage{setspace}
+\RequirePackage[a4paper,
+    left=1.3in,
+    right=1in]{geometry}
+    
+\renewcommand{\baselinestretch}{1.4}
+
+
+\providecommand{\keywords}[1]{\textbf{Keywords:} #1}
+
+
+%%% theorems, lemmas, etc %%%
+
+\newtheorem{definitions}{Definition}[section]
+\newtheorem{claim}{Claim}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+
+%%% custom maths %%%
+
+\RequirePackage{stackengine}
+
+\newcommand\cleq{\mathrel{\stackunder{$<$}{$\sim$}}}
+\newcommand\cgeq{\mathrel{\stackunder{$>$}{$\sim$}}}
+\DeclareMathOperator*{\argmax}{arg-max}
+\DeclareMathOperator*{\argmin}{arg-min}
+\newcommand{\indep}{\perp \!\!\! \perp}
+
+
+%%% title etc %%%
+
+\title{LTCC Exam: Harmonic Analysis}
+\author{Shakeel Gavioli-Akilagun}
+\date{April 2022}
+
+\begin{document}
+
+\maketitle
+
+\section*{Question 1}
+
+\subsection*{Part a}
+
+Write $f \left ( x \right ) = x^2 - x$ for $0 \leq x < 1$. For $p \neq 0$ the Fourier coefficients are given by
+
+\begin{align}
+	\hat{f} \left ( p \right ) & = \int_{\mathbb{T}} \left ( x^2 - x \right ) \overline{ \exp \left ( 2 \pi i p x \right ) } \mathrm{d}x \\ 
+	& =  \int_{\mathbb{T}} x^2 e^{-2 \pi i p x} \mathrm{d}x - \int_{\mathbb{T}} x e^{-2 \pi i p x} \mathrm{d}x \\ 
+	& = - \left ( \frac{x^2 e^{-2 \pi i p x}}{2 \pi i p} \right )\Biggr|_{0}^{1} + \left ( \frac{1}{\pi i p} \right ) \int_{\mathbb{T}} x e^{-2 \pi i p x} \mathrm{d}x - \int_{\mathbb{T}} x e^{-2 \pi i p x} \mathrm{d}x \\ 
+	& = - \left ( \frac{x^2 e^{-2 \pi i p x}}{2 \pi i p} \right )\Biggr|_{0}^{1} + \left ( \frac{1}{\pi i p} - 1 \right ) \left ( - \left ( \frac{x e^{-2 \pi i p x}}{2 \pi i p} \right )\Biggr|_{0}^{1} + \left ( \frac{1}{2 \pi i p} \right ) \int_{\mathbb{T}} e^{-2 \pi i p x} \mathrm{d}x \right ) \\ 
+	& = - \left ( \frac{1}{2 \pi i p} \right ) \left ( x^2 e^{-2 \pi i p x} + \left ( \frac{1}{\pi i p} - 1 \right ) \left ( x e^{-2 \pi i p x} + \frac{e^{-2 \pi i p x}}{2 \pi i p} \right ) \right )\Biggr|_0^1 \\
+	& = \frac{1}{2 \pi^2 p^2}
+\end{align}
+
+Finally using $\hat{f} \left ( 0 \right ) = \int_{\mathbb{T}} f(x) \mathrm{d}x$ I have that
+
+\begin{equation}
+	\hat{f} \left ( p \right ) =
+	\begin{cases}
+-\frac{1}{6} & p = 0 \\
+\frac{1}{2 \pi^2 p^2} & \text{ else}
+\end{cases}
+\end{equation}
+
+\subsection*{Part b}
+
+By Plancherel's theorem $\sum_{p \in \mathbb{Z}} \left | \hat{f} (p) \right |^2 = \int_{\mathbb{T}} \left | f(x) \right |^2 \mathrm{d}x$. Therefore I have that 
+
+\begin{align}
+	& \int_\mathbb{T} \left ( x^2 - x \right ) \mathrm{d}x = \left ( -\frac{1}{6} \right )^2 + 2 \sum_{p \geq 1} \left ( \frac{1}{2 \pi^2 p^2} \right ) ^ 2 \\ 
+	& \Rightarrow \sum_{p \geq 1} \frac{1}{p^4} = \frac{\pi^4}{90}
+\end{align}
+
+
+\section*{Question 2}
+
+\subsection*{Part a}
+
+A function $f : \mathbb{T} \rightarrow \mathbb{C}$ is uniformly continuous if for any $\epsilon $ there is a $\delta > 0$ such that $\sup_{\left | x - y \right | \leq \delta } \left | f(x) - f(y) \right | < \epsilon$. For the $\chi_X$ I have that
+
+\begin{align}
+	\left | \chi_X \left ( x \right ) - \chi_X \left ( y \right )  \right | & = \left | \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) e^{2 \pi i p x} - \sum_{p' \in \mathbb{Z}} \mathbb{P} \left ( X = p' \right ) e^{2 \pi i p' x} \right | \\  
+	& \leq \left | i \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) \left ( \sin (2 \pi p x) - \sin(2 \pi p y) \right ) \right | + \left | \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) \left ( \cos (2 \pi p x) - \cos(2 \pi p y) \right ) \right | \\ 
+	& = \left | 2i \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) \sin \left ( \pi p (x-y) \right )  \cos \left ( \pi p (x+y) \right ) \right | + \left |2 \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) \sin \left ( \pi p (x-y) \right ) \sin \left ( \pi p (x+y) \right ) \right | \\
+	& \leq 2 \left | i \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) \sin \left ( \pi p (x-y) \right ) \right | + 2 \left | \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) \sin \left ( \pi p (x-y) \right ) \right |\\ 
+	& \leq 2 \pi \left | x - y \right | \left ( \left | i \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) p \right | +  \left | \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X = p \right ) p \right | \right ) \\ 
+	& = 2 \pi \left | \mathbb{E} X \right | \left | x - y \right | \left ( 1 + i \right ) 
+\end{align}
+
+By the above discussion $\chi_X$ is uniformly continuous as long as $\left | \mathbb{E} X \right | < \infty$ which is assumed later in the question. 
+
+\subsection*{Part b}
+
+In class it was proved that for $f : \mathbb{T} \rightarrow \mathbb{C}$ if $f \in C^\infty \left ( \mathbb{T} \right )$ and $\left \| f^{(k)} \right \|_2 \leq C \tilde{a}^{-k} k!$ for some $\tilde{a} > 0$ and $C = C(\tilde{a})$ for all $k > 1$ then $f$ admits an analytic extension to the strip $\left | \text{Im} \left ( z \right ) \right | < a$ where $0 < \tilde{a} < a $. For $\chi_X$ and any $k > 0$ I have that 
+
+\begin{align}
+	\sum_{p \in \mathbb{Z}} \left | \widehat{\chi_X^{(k)}} \left ( p \right ) \right |^2 & = \sum_{p \in \mathbb{Z}} \left | \left ( 2 \pi i p \right )^k \widehat{\chi_X} \left ( p \right ) \right |^2 \\ 
+	& \leq \left ( 2 \pi \right ) ^ {2k} \sum_{p \in \mathbb{Z}} p^{2k} \mathbb{P} \left ( X = p \right ) \\ 
+	& = \left ( 2 \pi \right ) ^ {2k} \mathbb{E} X^{2k} \\ 
+	& \leq \left ( 2 \pi \right ) ^ {2k} C A^{2k} \left ( 2k \right ) ! \\
+	& = C \left ( 2 \pi A \right )^{2k} \left ( k! \right ) (k+1) \times \dots \times (2k) \\ 
+	& \leq C \left ( 2 \pi A \right )^{2k} \left ( k! \right ) \left ( 2k \right ) ^ k \\ 
+	& \leq C \left ( 4 \pi A \right )^{2k} \left ( k! \right )^2
+\end{align}
+
+Therefore for each $k > 0$ using Plancherel's theorem I have that $\left \| \chi_X^{(k)} \right \|_2 \leq C \left ( 4 \pi A \right )^{k} k!$ and the above discussion gives that $\chi_X$ admits an analytic extension to the strip $\left | \text{Im} \left ( z \right ) \right | < \left ( 4 \pi A \right )^{-1}$. 
+
+\subsection*{Part c}
+
+By part b for each $i \in \left \{ 1 , 2 \right \}$ each $\chi_{X_i}$ admits an analytic extension and so can be expressed as a convergent Taylor series. That is for each $x \in \mathbb{T}$ we must have
+
+\begin{align*}
+	\chi_{X_i} \left ( x \right ) & = \sum_{k \geq 0} \frac{x^k}{k!} \frac{\mathrm{d}^k}{\mathrm{d} t^k} \chi_{X_i} \left ( t \right )\Bigr|_{t=0} \\ 
+	& = \sum_{k \geq 0} \frac{x^k}{k!} \left ( \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X_i = p \right ) \frac{\mathrm{d}^k}{\mathrm{d} t^k} e^{2 \pi i t p} \Bigr|_{t=0} \right ) \\ 
+	& = \sum_{k \geq 0} \frac{x^k}{k!} \left ( \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X_i = p \right ) \left ( 2 \pi i p \right )^k \right ) \\ 
+	& = \sum_{k \geq 0} \frac{x^k}{k!} \left (2 \pi i \right )^ k \sum_{p \in \mathbb{Z}} p^k \mathbb{P} \left ( X_i = p \right ) \\ 
+	& = \sum_{k \geq 0} \frac{x^k}{k!} \left (2 \pi i \right )^ k\mathbb{E} X_i^k 
+\end{align*}
+
+Then the fact that $\mathbb{E} X_1^k = \mathbb{E} X_2^k$ for all $k > 0$ gives $\chi_{X_1} \equiv \chi_{X_2}$. 
+
+\subsection*{Part d}
+
+By definition for each $i \in \left \{ 1, 2 \right \}$ I have that
+
+\begin{equation}
+	\chi_{X_i} = \sum_{p \in \mathbb{Z}} \mathbb{P} \left ( X_i = p \right ) e^{2 \pi i x p} \equiv \sum_{p \in \mathbb{Z}} \widehat{\chi_{X_i}} \left ( p \right ) e^{2 \pi i x p}
+\end{equation}
+
+Therefore $\mathbb{P} \left ( X_i = p \right ) = \widehat{\chi_{X_i}} \left ( p \right )$. Form part c I have that $\chi_{X_1} \equiv \chi_{X_2}$ therefore the uniqueness of the Fourier transform gives $\widehat{\chi_{X_1}} \left ( p \right ) = \widehat{\chi_{X_2}} \left ( p \right )$ which implies that $\mathbb{P} \left ( X_1 = p \right ) = \mathbb{P} \left ( X_2 = p \right )$ for all $p$. 
+
+
+\section*{Question 3}
+
+The spectral representation theorem for unitary operators states that if $\mathcal{H}$ is a Hilbert space and $U$ is a unitary operator acting on $\mathcal{H}$ then there exists a family of measures $\left ( \mu_{a,b} \right )_{ a,b \in \mathcal{H}} $ on $\mathbb{T}$ such that for every bounded function $g : \mathbb{T} \rightarrow \mathbb{C}$ it holds that
+
+\begin{equation}
+	\left < g \left ( U \right ) a , b \right > = \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} \mu_{a,b}
+\end{equation}
+
+Moreover each measure $\mu_{a,b}$ is characterized by its Fourier coefficients which are given by
+
+\begin{equation}
+	\widehat{\mu_{a,b}} \left ( p \right ) = \left < U ^ p a , b \right >
+\end{equation} 
+
+Let $U \in \mathbb{C}^{n \times n}$ be a unitary tridiagonal matrix and let $f \in C^1 \left ( \mathbb{T} \right )$ be such that $g \left ( e^{2 \pi i x} \right ) = f (x)$. Write $\mathbf{v}_k$ for the unit vector in $\mathbb{R} ^ n$ with $k$-th entry equal to $1$. I have that
+
+\begin{align}
+	\left | g \left ( U \right )_{jk} \right | & = \left | \left < g \left ( U \right ) \mathbf{v}_j, \mathbf{v}_k \right > \right | \\ 
+	& = \left | \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} \mu_{\mathbf{v}_1, \mathbf{v}_2} \right | \\
+	& = \left | \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} \left ( \sum_{p \in \mathbb{Z}} \widehat{\mu}_{\mathbf{v}_1, \mathbf{v}_2} (p) e^{2 \pi i p x} \right ) \right | \\ 
+	& = \left | \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} x \left ( \sum_{p \in \mathbb{Z}} \left < U^p \mathbf{v}_j , \mathbf{v}_k \right > 2 \pi i p e^{2 \pi i p x} \right ) \right | \\ 
+	& = \left | \sum_{p \in \mathbb{Z}} 2 \pi i p \left < U^p \mathbf{v}_j , \mathbf{v}_k \right > \int_{\mathbb{T}} g \left ( x \right ) e^{2 \pi i p x} \mathrm{d} x \right | \\ 
+	& \leq 2 \pi i \left \| f' \right \|_\infty \left | \sum_{p \in \mathbb{Z}} p \left < U^p \mathbf{v}_j , \mathbf{v}_k \right > \right |
+\end{align}
+
+The last line follows from this discussion on mathoverflow\footnote{https://mathoverflow.net/questions/108418/functional-calculus-of-unitary-matrices-and-commutator-norms-reference-request} and unfortunately from here I am not sure how to proceed. 
+
+\section*{Question 4}
+
+\subsection*{Part a}
+
+For $\alpha \in \left ( -\frac{1}{2}, \frac{1}{2} \right ) \setminus \mathbb{Q} $ write $\mu_\alpha \left ( A \right ) = \# \left ( A \cap \left \{ -\alpha, \alpha \right \} \right ) / 2 | \alpha |$. For $p \neq 0$ I have that
+
+\begin{align}
+	\left | \widehat{\mu_\alpha} \left ( p \right ) \right | & = \left | \int_\mathbb{T} e^{-2 \pi i p x} \mathrm{d} \mu_\alpha \left ( x \right ) \right | \\ 
+	& = \left | \left ( \frac{1}{2 \alpha} \right ) \int_{-\alpha}^\alpha e^{-2 \pi i p x} \mathrm{d} x \right | \\ 
+	& = \left |\left ( \frac{1}{4 \pi i p \alpha} \right ) e^{-2 \pi i p x} \Bigr|_{-\alpha}^\alpha \right | \\ 
+	& = \left | \frac{\sin \left ( 2 \pi \alpha p \right )}{2 \pi p \alpha} \right | \\ 
+	& \leq \frac{1}{2 \pi \left | p \alpha \right |} < 1 
+\end{align}
+
+Since $\mu_\alpha$ is a probability measure for $p = 0$ I have that
+
+\begin{align}
+	\left | \widehat{\mu_\alpha} \left ( 0 \right ) \right | = \left | \int_\mathbb{T} \mathrm{d} \mu_\alpha \left ( x \right ) \right | = 1 
+\end{align}
+
+\subsection*{Part b}
+
+Writing $\mu_\alpha^{\ast k} = \mu_\alpha \ast \dots \ast \mu_\alpha$ and using recursively the property $\widehat{\mu \ast \nu} \left ( p \right ) = \widehat{\mu} \left ( p \right ) \widehat{\nu} \left ( p \right )$ for two measures $\mu, \nu$ on $\mathbb{T}$ from part a above $\widehat{\mu_\alpha^{\ast k}} \left ( 0 \right ) = 1$ for all $k$. For $p \neq 0$ I have that
+
+\begin{equation}
+	\left | \mu_\alpha^{\ast k} \left ( p \right ) \right | \leq \left ( \frac{1}{2 \pi \left | p \alpha \right |} \right ) ^ k \rightarrow 0 \hspace{1cm} \text{(as $k \rightarrow \infty$)}
+\end{equation}
+
+Let $\text{mes}$ be the Lebesgue measure on $\mathbb{T}$. I have that $\widehat{\text{mes}} \left ( p \right ) = 0$ for all $p \neq 0$ and $\widehat{\text{mes}} \left ( 0 \right ) = 1$. It was proved in class that a sequence of measures $\left ( \mu_n \right )_{n \geq 1}$ converges weakly to a measure $\mu$ (as $n \rightarrow \infty$) if for all $p$ we have that $\widehat{\mu_n} \left ( p \right ) \rightarrow \widehat{\mu} \left ( p \right ) $. Therefore $\mu_\alpha^{\ast k}$ converges weakly to $\text{mes}$. 
+
+\end{document}
