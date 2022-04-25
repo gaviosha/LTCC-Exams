@@ -181,15 +181,19 @@ Moreover each measure $\mu_{a,b}$ is characterized by its Fourier coefficients w
 Let $U \in \mathbb{C}^{n \times n}$ be a unitary tridiagonal matrix and let $f \in C^1 \left ( \mathbb{T} \right )$ be such that $g \left ( e^{2 \pi i x} \right ) = f (x)$. Write $\mathbf{v}_k$ for the unit vector in $\mathbb{R} ^ n$ with $k$-th entry equal to $1$. I have that
 
 \begin{align}
-	\left | g \left ( U \right )_{jk} \right | & = \left | \left < g \left ( U \right ) \mathbf{v}_j, \mathbf{v}_k \right > \right | \\ 
-	& = \left | \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} \mu_{\mathbf{v}_1, \mathbf{v}_2} \right | \\
-	& = \left | \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} \left ( \sum_{p \in \mathbb{Z}} \widehat{\mu}_{\mathbf{v}_1, \mathbf{v}_2} (p) e^{2 \pi i p x} \right ) \right | \\ 
-	& = \left | \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} x \left ( \sum_{p \in \mathbb{Z}} \left < U^p \mathbf{v}_j , \mathbf{v}_k \right > 2 \pi i p e^{2 \pi i p x} \right ) \right | \\ 
-	& = \left | \sum_{p \in \mathbb{Z}} 2 \pi i p \left < U^p \mathbf{v}_j , \mathbf{v}_k \right > \int_{\mathbb{T}} g \left ( x \right ) e^{2 \pi i p x} \mathrm{d} x \right | \\ 
-	& \leq 2 \pi i \left \| f' \right \|_\infty \left | \sum_{p \in \mathbb{Z}} p \left < U^p \mathbf{v}_j , \mathbf{v}_k \right > \right |
+	\left | g \left ( U \right )_{jk} \right | & = \left | \left < g \left ( U \right ) \mathbf{v}_j, \mathbf{v}_k \right > \right |  = \left | \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} \mu_{\mathbf{v}_1, \mathbf{v}_2} \right |
 \end{align}
 
-The last line follows from this discussion on mathoverflow\footnote{https://mathoverflow.net/questions/108418/functional-calculus-of-unitary-matrices-and-commutator-norms-reference-request} and unfortunately from here I am not sure how to proceed. 
+Next, since the discrete part of a measure can be recovered from its Fourier-Stieltjes series 
+
+\begin{align}
+	\left | \int_{\mathbb{T}} g \left ( x \right ) \mathrm{d} \mu_{\mathbf{v}_1, \mathbf{v}_2} \right | & = \lim_{N \rightarrow \infty} \left | \int_{\mathbb{T}} g (x) \mathrm{d} \left ( \frac{1}{2N + 1} \sum_{p = -N}^N \widehat{\mu}_{\mathbf{v}_1, \mathbf{v}_2} \left ( p \right ) e^{2 \pi i p x} \right ) \right | \\ 
+	& = \lim_{N \rightarrow \infty} \left | \int_{\mathbb{T}} g (x) \left ( \frac{1}{2N + 1} \sum_{p = -N}^N \left < U^p \mathbf{v}_j, \mathbf{v}_k \right > e^{2 \pi i p x} 2 \pi i p \right ) \mathrm{d} x \right | \\ 
+	& = \lim_{N \rightarrow \infty} \left | \left ( \frac{2 \pi i}{2N + 1} \right ) \sum_{p = - N}^N \left < U^p \mathbf{v}_j, \mathbf{v}_k \right > p \int_{\mathbb{T}} g(x) e^{2 \pi i p x} \mathrm{d} x \right |\\ 
+	& \leq \left \| f' \right \|_\infty \lim_{N \rightarrow \infty} \left | 2 \pi i  \left < \left ( \frac{1}{2N + 1} \sum_{p = - N}^N p \times U^p \right ) \mathbf{v}_j, \mathbf{v}_k \right > \right |
+\end{align}
+
+The last line follows from this discussion on mathoverflow\footnote{https://mathoverflow.net/questions/108418/functional-calculus-of-unitary-matrices-and-commutator-norms-reference-request} and unfortunately from here I am not sure how to proceed. I would like to invoke the Ergodic theorem, namely that if $U$ is as above then $N^{-1} \sum_{p=0}^{N-1} U^p $ converges to its orthogonal projection onto the subspace of $U$-invariant vectors. However, the presence of ``$p$" in the sum means I cannot do this. 
 
 \section*{Question 4}
 
